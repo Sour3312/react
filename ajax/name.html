@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+    <p>qwertyuiop</p>
+
+    <h1>1234567890</h1>
+    <a href="mat.html">load html </a><br><br>
+    <a href="data.json">load json </a><br><br>
+
+    <button onclick="loadHtml()">load html</button>
+    <button onclick="loadJson()">load json </button>
+    <button id="btnj">load with jquery </button>
+        <div id="div1">...</div> 
+        <div id="div2">---</div>  
+        <div id="div3">---</div>  
+
+<script>
+    function loadHtml(){
+        var reqs=new XMLHttpRequest()
+        console.log(reqs);
+
+        reqs.open("GET","mat.html",true)
+
+        reqs.onreadystatechange=function(){
+            if(reqs.readyState===reqs.DONE){
+            if( reqs.status==200){
+                document.querySelector('#div1').innerHTML=this.responseURL;
+            }
+        }}
+        reqs.send();
+    }
+
+    function loadJson(){
+        var reqs=new XMLHttpRequest()
+        reqs.open("GET","https://api.covid19api.com/summary")
+
+        reqs.onreadystatechange = () =>{
+            if(this.readyState==4 && this.status==200){
+                document.querySelector('#div2').innerHTML=this.responseText;
+                console.log(JSON.stringify(this.responseText));
+            }else{
+                console.log("error while loading..");
+            }
+        }
+        reqs.send();
+    }
+    </script>
+
+    <script>
+         $(document).ready(function(){
+        $('#btnj').click(function(){
+            $.get("data.json", function(data){
+                console.log(data);
+                document.getElementById('div3').innerHTML=JSON.stringify(data);
+            })
+        })
+    })
+    </script>
+
+</body>
+</html>
